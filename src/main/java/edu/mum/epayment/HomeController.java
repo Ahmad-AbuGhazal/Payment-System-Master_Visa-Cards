@@ -1,4 +1,4 @@
-package epayment;
+package edu.mum.epayment;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
