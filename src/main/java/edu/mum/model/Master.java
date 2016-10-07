@@ -1,29 +1,33 @@
 package edu.mum.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Master {
-	
+public class Master implements CreditCard {
+
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	private String cardHolder;
-	
+
 	private String cardNum;
-	
+
 	private String securityCode;
-	
+
 	private Date expiration;
-	
+
+	private float maxCredit;
+
+	private float availableCredit;
+
 	private boolean status;
-	
-//	private Address address;
+
+	// private Address address;
 
 	public String getCardHolder() {
 		return cardHolder;
@@ -65,11 +69,28 @@ public class Master {
 		this.status = status;
 	}
 
-//	public Address getAddress() {
-//		return address;
-//	}
-//
-//	public void setAddress(Address address) {
-//		this.address = address;
-//	}
+	public float getMaxCredit() {
+		return maxCredit;
+	}
+
+	public void setMaxCredit(float maxCredit) {
+		this.maxCredit = maxCredit;
+	}
+
+	public float getAvailableCredit() {
+		return availableCredit;
+	}
+
+	public void setAvailableCredit(float availableCredit) {
+		this.availableCredit = availableCredit;
+	}
+
+	
+	// public Address getAddress() {
+	// return address;
+	// }
+	//
+	// public void setAddress(Address address) {
+	// this.address = address;
+	// }
 }

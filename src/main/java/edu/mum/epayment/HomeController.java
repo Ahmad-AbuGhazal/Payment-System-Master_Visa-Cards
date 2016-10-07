@@ -11,5 +11,7 @@ public class HomeController {
 		System.out.println("Welcome to Payment");
 		return "index";
 	}
+	
+	
 }
 
