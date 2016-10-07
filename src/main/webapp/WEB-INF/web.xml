@@ -15,7 +15,8 @@
 
       <param-value>
 
-				classpath*:**/*context.xml
+				<!-- classpath*:**/*context.xml -->
+				classpath:context/DispatcherServlet-context.xml
 
 			</param-value>
 
@@ -37,7 +38,8 @@
 
     <param-value>
 
-       		classpath*:**/*Context.xml
+       		<!-- classpath*:**/*Context.xml -->
+       		classpath:context/application-context.xml
 
   	</param-value>
 

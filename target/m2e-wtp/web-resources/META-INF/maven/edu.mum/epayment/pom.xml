@@ -1,244 +1,192 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>edu.mum</groupId>
-  <artifactId>epayment</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>epayment Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>edu.mum</groupId>
+	<artifactId>epayment</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>epayment Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+
+	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.springframework</groupId> 
+		<artifactId>spring-framework-bom</artifactId> <version>4.2.4.RELEASE</version> 
+		<type>pom</type> <scope>import</scope> </dependency> <dependency> <groupId>io.spring.platform</groupId> 
+		<artifactId>platform-bom</artifactId> <version>2.0.1.RELEASE</version> <type>pom</type> 
+		<scope>import</scope> </dependency> </dependencies> </dependencyManagement> 
+		<dependencies> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-webmvc</artifactId> 
+		</dependency> <dependency> <groupId>javax.servlet</groupId> <artifactId>jstl</artifactId> 
+		</dependency> <dependency> <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId> 
+		<scope>provided</scope> </dependency> <dependency> <groupId>commons-fileupload</groupId> 
+		<artifactId>commons-fileupload</artifactId> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
+		<artifactId>jackson-databind</artifactId> </dependency> <dependency> <groupId>org.springframework</groupId> 
+		<artifactId>spring-aop</artifactId> </dependency> <dependency> <groupId>org.aspectj</groupId> 
+		<artifactId>aspectjrt</artifactId> </dependency> <dependency> <groupId>org.aspectj</groupId> 
+		<artifactId>aspectjweaver</artifactId> </dependency> Spring Core dependencies 
+		<dependency> <groupId>org.springframework</groupId> <artifactId>spring-core</artifactId> 
+		</dependency> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-context</artifactId> 
+		</dependency> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-tx</artifactId> 
+		</dependency> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-orm</artifactId> 
+		</dependency> <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-entitymanager</artifactId> 
+		</dependency> <dependency> <groupId>cglib</groupId> <artifactId>cglib-nodep</artifactId> 
+		<version>2.2.2</version> </dependency> <dependency> <groupId>org.springframework.security</groupId> 
+		<artifactId>spring-security-core</artifactId> </dependency> <dependency> 
+		<groupId>org.springframework.security</groupId> <artifactId>spring-security-config</artifactId> 
+		</dependency> <dependency> <groupId>org.springframework.security</groupId> 
+		<artifactId>spring-security-web</artifactId> </dependency> <dependency> <groupId>org.hibernate</groupId> 
+		<artifactId>hibernate-validator</artifactId> </dependency> <dependency> <groupId>log4j</groupId> 
+		<artifactId>log4j</artifactId> </dependency> <dependency> <groupId>org.slf4j</groupId> 
+		<artifactId>slf4j-log4j12</artifactId> </dependency> </dependencies> -->
+
 	<dependencyManagement>
-
 		<dependencies>
-
-
-
 			<dependency>
-
-				<groupId>org.springframework</groupId>
-
-				<artifactId>spring-framework-bom</artifactId>
-
-				<version>4.2.4.RELEASE</version>
-
-				<type>pom</type>
-
-				<scope>import</scope>
-
-			</dependency>
-
-
-
-			<dependency>
-
 				<groupId>io.spring.platform</groupId>
-
 				<artifactId>platform-bom</artifactId>
-
 				<version>2.0.1.RELEASE</version>
-
 				<type>pom</type>
-
 				<scope>import</scope>
-
 			</dependency>
-
 		</dependencies>
-
 	</dependencyManagement>
 
-
-
 	<dependencies>
-
 		<dependency>
-
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
-
 			<artifactId>spring-webmvc</artifactId>
-
 		</dependency>
-
-
-
 		<dependency>
-
 			<groupId>javax.servlet</groupId>
-
-			<artifactId>jstl</artifactId>
-
-		</dependency>
-
-		<dependency>
-
-			<groupId>javax.servlet</groupId>
-
-			<artifactId>javax.servlet-api</artifactId>
-
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
 			<scope>provided</scope>
-
 		</dependency>
-
-
-
 		<dependency>
-
-			<groupId>commons-fileupload</groupId>
-
-			<artifactId>commons-fileupload</artifactId>
-
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
-
-			<groupId>com.fasterxml.jackson.core</groupId>
-
-			<artifactId>jackson-databind</artifactId>
-
-			<version>2.4.4</version>
-
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
 		</dependency>
-
 		<dependency>
-
-			<groupId>org.springframework</groupId>
-
-			<artifactId>spring-aop</artifactId>
-
-		</dependency>
-
-		<dependency>
-
-			<groupId>org.aspectj</groupId>
-
-			<artifactId>aspectjrt</artifactId>
-
-		</dependency>
-
-		<dependency>
-
-			<groupId>org.aspectj</groupId>
-
-			<artifactId>aspectjweaver</artifactId>
-
-		</dependency>
-
-		<!-- Spring Core dependencies -->
-
-		<dependency>
-
-
-
-			<groupId>org.springframework</groupId>
-
-			<artifactId>spring-core</artifactId>
-
-		</dependency>
-
-		<dependency>
-
-			<groupId>org.springframework</groupId>
-
-			<artifactId>spring-context</artifactId>
-
-		</dependency>
-
-		<dependency>
-
-			<groupId>org.springframework</groupId>
-
-			<artifactId>spring-tx</artifactId>
-
-		</dependency>
-
-		<dependency>
-
-			<groupId>org.springframework</groupId>
-
-			<artifactId>spring-orm</artifactId>
-
-		</dependency>
-
-
-
-		<dependency>
-
 			<groupId>org.hibernate</groupId>
-
-			<artifactId>hibernate-entitymanager</artifactId>
-
-		</dependency>
-
-		<dependency>
-
-			<groupId>cglib</groupId>
-
-			<artifactId>cglib-nodep</artifactId>
-
-			<version>2.2.2</version>
-
-		</dependency>
-
-		<dependency>
-
-			<groupId>org.springframework.security</groupId>
-
-			<artifactId>spring-security-core</artifactId>
-
-		</dependency>
-
-
-
-		<dependency>
-
-			<groupId>org.springframework.security</groupId>
-
-			<artifactId>spring-security-config</artifactId>
-
-		</dependency>
-
-
-
-		<dependency>
-
-			<groupId>org.springframework.security</groupId>
-
-			<artifactId>spring-security-web</artifactId>
-
-		</dependency>
-
-
-
-		<dependency>
-
-			<groupId>org.hibernate</groupId>
-
 			<artifactId>hibernate-validator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
 		</dependency>
 
 
-
-
-
 		<dependency>
-
-			<groupId>log4j</groupId>
-
-			<artifactId>log4j</artifactId>
-
-		</dependency>
-
-		<dependency>
-
 			<groupId>org.slf4j</groupId>
-
-			<artifactId>slf4j-log4j12</artifactId>
-
+			<artifactId>slf4j-simple</artifactId>
 		</dependency>
+
+		<!-- Database -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+
+		<!-- Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+
+
+		<!-- Tag libraries -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+
 
 	</dependencies>
-
 
 
 	<build>

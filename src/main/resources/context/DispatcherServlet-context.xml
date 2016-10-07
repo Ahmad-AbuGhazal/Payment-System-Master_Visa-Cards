@@ -12,7 +12,7 @@
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<context:annotation-config />
 
-	<context:component-scan base-package="edu.mum.epayment"></context:component-scan>
+	<context:component-scan base-package="edu.mum"></context:component-scan>
 
 	<mvc:annotation-driven enable-matrix-variables="true"
 		validator="validator" />

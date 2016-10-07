@@ -13,7 +13,7 @@ public class Master {
 	@GeneratedValue
 	private long id;
 	
-	private String cardHoler;
+	private String cardHolder;
 	
 	private String cardNum;
 	
@@ -23,14 +23,14 @@ public class Master {
 	
 	private boolean status;
 	
-	private Address address;
+//	private Address address;
 
-	public String getCardHoler() {
-		return cardHoler;
+	public String getCardHolder() {
+		return cardHolder;
 	}
 
-	public void setCardHoler(String cardHoler) {
-		this.cardHoler = cardHoler;
+	public void setCardHolder(String cardHolder) {
+		this.cardHolder = cardHolder;
 	}
 
 	public String getCardNum() {
@@ -65,11 +65,11 @@ public class Master {
 		this.status = status;
 	}
 
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+//	public Address getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
 }
