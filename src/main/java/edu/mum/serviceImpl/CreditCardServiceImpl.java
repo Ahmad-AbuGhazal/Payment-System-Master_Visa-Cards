@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import edu.mum.repository.VisaRepository;
 import edu.mum.service.CreditCardService;
 
 @Service
+@Transactional
 public class CreditCardServiceImpl implements CreditCardService {
 
 	@Autowired
@@ -28,7 +31,27 @@ public class CreditCardServiceImpl implements CreditCardService {
 	public char verifyCreditCard(RequestedCard requestedCard) {
 		char ch = ' ';
 
-		String cardType = requestedCard.getCardType().toLowerCase();
+		String cardType = requestedCard.getCardType();
+
+		if (cardType == null) {
+			return 'N';
+		} else {
+			cardType = cardType.toLowerCase();
+		}
+
+		// if(cardType.equals("visa")){
+		// List<Visa> visaCards =
+		// visaRepository.findByCardNum(requestedCard.getCardNum());
+		// ch = verifyHelper(requestedCard, new
+		// ArrayList<CreditCard>(visaCards));
+		// }else if(cardType.equals("master")){
+		// List<Master> masterCards =
+		// masterRepository.findByCardNum(requestedCard.getCardNum());
+		// ch = verifyHelper(requestedCard, new
+		// ArrayList<CreditCard>(masterCards));
+		// }else{
+		// ch = 'N';
+		// }
 
 		switch (cardType) {
 		case "visa":
@@ -48,18 +71,50 @@ public class CreditCardServiceImpl implements CreditCardService {
 		return ch;
 	}
 
+	public char afterPlaceOrder(RequestedCard requestedCard) {
+		char ch = verifyCreditCard(requestedCard);
+
+		if (ch == 'N') {
+			return 'N';
+		} else {
+			String cardType = requestedCard.getCardType().toLowerCase();
+			List<CreditCard> cards = null;
+
+			switch (cardType) {
+			case "visa":
+				List<Visa> visaCards = visaRepository.findByCardNum(requestedCard.getCardNum());
+				cards = new ArrayList<CreditCard>(visaCards);
+				break;
+
+			case "master":
+				List<Master> masterCards = masterRepository.findByCardNum(requestedCard.getCardNum());
+				cards = new ArrayList<CreditCard>(masterCards);
+				break;
+
+			default:
+				cards = new ArrayList<CreditCard>();
+				return 'N';
+			}
+
+			CreditCard card = cards.get(0);
+			card.setAvailableCredit(card.getAvailableCredit() - requestedCard.getPurchaseAmount());
+
+			if (cardType.equals("visa")) {
+				visaRepository.save((Visa) card);
+			} else if (cardType.equals("master")) {
+				masterRepository.save((Master) card);
+			}
+
+			return 'Y';
+		}
+	}
+
 	private static char verifyHelper(RequestedCard requestedCard, List<CreditCard> cards) {
 
 		String cardType = requestedCard.getCardType().toLowerCase();
 
 		if (cards.size() == 1) {
 			CreditCard card = cards.get(0);
-
-			if (cardType.equals("visa")) {
-				card = (Visa) card;
-			} else if (cardType.equals("master")) {
-				card = (Master) card;
-			}
 
 			String cardHolder = card.getCardHolder();
 			String securityCode = card.getSecurityCode();
@@ -86,8 +141,10 @@ public class CreditCardServiceImpl implements CreditCardService {
 			return 'N';
 		}
 	}
-	
+
 	public static void main(String[] args) {
+		CreditCardServiceImpl ccs = new CreditCardServiceImpl();
+
 		RequestedCard rc1 = new RequestedCard();
 		rc1.setCardNum("123456");
 		rc1.setCardHolder("Lin");
@@ -95,7 +152,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 		rc1.setSecurityCode("123");
 		rc1.setExpiration(new Date(1111111111));
 		rc1.setPurchaseAmount(1000.00f);
-		
+
 		RequestedCard rc2 = new RequestedCard();
 		rc2.setCardNum("789012");
 		rc2.setCardHolder("Weiwei");
@@ -103,7 +160,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 		rc2.setSecurityCode("456");
 		rc2.setExpiration(new Date(1111111111));
 		rc2.setPurchaseAmount(2000.00f);
-		
+
 		Visa v = new Visa();
 		v.setCardNum("123456");
 		v.setCardHolder("Lin");
@@ -111,7 +168,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 		v.setSecurityCode("123");
 		v.setStatus(true);
 		v.setAvailableCredit(500.00f);
-		
+
 		Master m = new Master();
 		m.setCardNum("789012");
 		m.setCardHolder("Weiwei");
@@ -121,12 +178,15 @@ public class CreditCardServiceImpl implements CreditCardService {
 		m.setAvailableCredit(3000.00f);
 
 		List<CreditCard> cards = new ArrayList<CreditCard>();
-		cards.add(v);
-		
-		System.out.println(verifyHelper(rc1, cards));
+		cards.add(m);
+
+		System.out.println(verifyHelper(rc2, cards));
+
+		ccs.afterPlaceOrder(rc2);
+		// System.out.println(m.getAvailableCredit());
 	}
 
-//	private char verifyMasterHelper(RequestedCard requestedCard) {
-//
-//	}
+	// private char verifyMasterHelper(RequestedCard requestedCard) {
+	//
+	// }
 }

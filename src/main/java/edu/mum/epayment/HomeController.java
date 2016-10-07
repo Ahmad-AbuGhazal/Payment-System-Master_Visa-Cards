@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.mum.model.RequestedCard;
 import edu.mum.model.ResponseInfo;
 import edu.mum.service.CreditCardService;
-import scala.annotation.meta.setter;
 
 @Controller
 public class HomeController {
@@ -24,12 +23,21 @@ public class HomeController {
 		return "index";
 	}
 	
-	@RequestMapping(value = "verifycard", method = RequestMethod.GET)
+	@RequestMapping(value = "/verifycard", method = RequestMethod.POST)
 	public @ResponseBody ResponseInfo verifyCard(@RequestBody RequestedCard requestedCard){
 		ResponseInfo responseInfo = new ResponseInfo();
 		char response = creditCardService.verifyCreditCard(requestedCard);
 		responseInfo.setResponse(response);
 		
+		return responseInfo;
+	}
+	
+	@RequestMapping(value = "/afterplaceorder", method = RequestMethod.POST)
+	public @ResponseBody ResponseInfo afterPlaceOrder(@RequestBody RequestedCard requestedCard){
+		ResponseInfo responseInfo = new ResponseInfo();
+		char response = creditCardService.afterPlaceOrder(requestedCard);
+		responseInfo.setResponse(response);
+				
 		return responseInfo;
 	}
 }
