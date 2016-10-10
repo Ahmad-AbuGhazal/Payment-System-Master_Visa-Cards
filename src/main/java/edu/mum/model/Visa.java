@@ -6,6 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Visa credit card entity class.
+ * @author Lin
+ *
+ */
+
 @Entity
 public class Visa implements CreditCard {
 	

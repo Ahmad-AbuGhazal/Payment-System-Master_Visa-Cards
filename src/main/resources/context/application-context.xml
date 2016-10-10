@@ -50,7 +50,7 @@
 		<beans:property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 		<beans:property name="url"
 			value="jdbc:sqlserver://localhost:1433;databaseName=epayment;integratedSecurity=true"/>
-		<beans:property name="username" value="sa2" />
+		<beans:property name="username" value="sa" />
 		<beans:property name="password" value="2012Babyborn" />
 	</beans:bean>
 

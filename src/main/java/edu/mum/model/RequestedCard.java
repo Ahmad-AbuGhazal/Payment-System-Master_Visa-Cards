@@ -2,6 +2,12 @@ package edu.mum.model;
 
 import java.util.Date;
 
+/**
+ * Class for @RequestBody
+ * @author Lin
+ *
+ */
+
 public class RequestedCard {
 	
 	private String cardType;

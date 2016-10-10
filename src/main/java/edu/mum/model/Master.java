@@ -6,6 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Master credit card entity class.
+ * @author Lin
+ *
+ */
+
 @Entity
 public class Master implements CreditCard {
 

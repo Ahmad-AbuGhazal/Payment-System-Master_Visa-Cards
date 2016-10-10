@@ -2,6 +2,11 @@ package edu.mum.model;
 
 import java.util.Date;
 
+/**
+ * Interface for different credit cards
+ * @author Lin
+ *
+ */
 public interface CreditCard {
 	public String getCardHolder();
 

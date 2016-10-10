@@ -1,5 +1,11 @@
 package edu.mum.model;
 
+/**
+ * Class for @ResponseBody
+ * @author Lin
+ *
+ */
+
 public class ResponseInfo {
 	private char response;
 
