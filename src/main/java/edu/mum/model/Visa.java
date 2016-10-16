@@ -89,8 +89,10 @@ public class Visa implements CreditCard {
 
 	public void setAvailableCredit(float availableCredit) {
 		this.availableCredit = availableCredit;
-	}	
+	}
 	
+
+
 
 //	public Address getAddress() {
 //		return address;
