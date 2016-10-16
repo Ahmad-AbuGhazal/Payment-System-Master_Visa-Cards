@@ -22,11 +22,14 @@ public class TransactionRecordServiceImpl implements TransactionRecordService {
 	@Autowired
 	private MasterTransactionRecordRepository masterTransactionRecordRepository;
 	
-	public TransactionRecord saveVisaRecord(VisaTransactionRecord visaTransactionRecord){
-		return visaTransactionRecordRepository.save(visaTransactionRecord);
-	}
-	
-	public TransactionRecord saveMasterRecord(MasterTransactionRecord masterTransactionRecord){
-		return masterTransactionRecordRepository.save(masterTransactionRecord);
+	public TransactionRecord saveCreditCardRecord(String cardType, TransactionRecord transactionRecord){
+		if(cardType.equals("visa")){
+			TransactionRecord t = visaTransactionRecordRepository.save((VisaTransactionRecord)transactionRecord);
+			return t;
+		}else if(cardType.equals("master")){
+			return masterTransactionRecordRepository.save((MasterTransactionRecord)transactionRecord);
+		}else{
+			return null;
+		}
 	}
 }

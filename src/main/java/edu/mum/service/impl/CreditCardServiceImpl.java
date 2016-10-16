@@ -85,14 +85,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 	}
 
 	private void saveRecord(String cardType, TransactionRecord transactionRecord) {
-		
-		
-		
-		if (cardType.equals("visa")) {
-			transactionRecordService.saveVisaRecord((VisaTransactionRecord) transactionRecord);
-		} else {
-			transactionRecordService.saveMasterRecord((MasterTransactionRecord) transactionRecord);
-		}
+		transactionRecordService.saveCreditCardRecord(cardType, transactionRecord);
 	}
 
 	private TransactionRecord initTransactionRecord(TransactionRecord transactionRecord, RequestedCard requestedCard) {
