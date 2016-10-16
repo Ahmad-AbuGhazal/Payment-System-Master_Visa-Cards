@@ -21,12 +21,13 @@ public class CreditCardRepositoryFactory {
 	private MasterRepository masterRepository;
 	
 	public CreditCardRepository getCreditCardRepository(String cardType){
-		if(cardType.equals("visa")){
-			return visaRepository;
-		}else if(cardType.equals("master")){
-			return masterRepository;
-		}else{
-			return null;
+		return null;
+//		if(cardType.equals("visa")){
+//			return visaRepository;
+//		}else if(cardType.equals("master")){
+//			return masterRepository;
+//		}else{
+//			return null;
 		}
 	}
-}
+

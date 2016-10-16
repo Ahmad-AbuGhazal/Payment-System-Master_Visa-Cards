@@ -1,174 +1,154 @@
 package edu.mum.service.impl;
 
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.mum.model.CardType;
 import edu.mum.model.CreditCard;
-import edu.mum.model.MasterTransactionRecord;
+import edu.mum.model.Master;
 import edu.mum.model.RequestedCard;
-import edu.mum.model.TransactionRecord;
-import edu.mum.model.VisaTransactionRecord;
-import edu.mum.repository.CreditCardRepository;
-import edu.mum.repository.CreditCardTransactionRecordRepository;
+import edu.mum.model.Visa;
+import edu.mum.repository.MasterRepository;
+import edu.mum.repository.VisaRepository;
 import edu.mum.service.CreditCardService;
-import edu.mum.service.TransactionRecordService;
+import edu.mum.utils.PaymentUtils;
 
 @Service
 @Transactional
 public class CreditCardServiceImpl implements CreditCardService {
 
 	@Autowired
-	private TransactionRecordService transactionRecordService;
-	
-	@Autowired
-	private CreditCardRepositoryFactory  creditCardRepositoryFactory;
-	
-	@Autowired
-	private CreditCardTransactionRecordRepositoryFactory creditCardTransactionRecordRepositoryFactory;
-	
-	@Autowired
-	private CreditCardTransactionRecordFactory creditCardTransactionRecordFactory;
+	private VisaRepository visaRepository;
 
+	@Autowired
+	private MasterRepository masterRepository;
+
+	@Override
 	public char verifyCreditCard(RequestedCard requestedCard) {
-		char ch = ' ';
 
-		String cardType = requestedCard.getCardType();
+		char ch = 'N';
 
-		if (cardType == null) {
-			return 'N';
-		} else {
-			cardType = cardType.toLowerCase();
+		if (requestedCard == null)
+			ch = 'N';
+		else {
+			boolean isNumber = PaymentUtils.isNumeric(requestedCard.getCardNum());
+			if (isNumber == false) {
+				ch = 'N';
+			} else {
+
+				if (PaymentUtils.CheckValidNumber(requestedCard.getCardNum()) == false) {
+					ch = 'N';
+				} else {
+					if (CardType.detect(requestedCard.getCardNum()) == CardType.VISA) {
+
+						Visa visa = visaRepository.findByCardNum(requestedCard.getCardNum());
+						if (visa == null) {
+							ch = 'N';
+						} else {
+
+							if (!verifyCard(visa, requestedCard))
+								ch = 'N';
+							else {
+								ch = 'Y';
+							}
+
+						}
+
+					} else {
+						if (CardType.detect(requestedCard.getCardNum()) == CardType.MASTERCARD) {
+							Master master = masterRepository.findByCardNum(requestedCard.getCardNum());
+							if (master == null) {
+								ch = 'N';
+							} else {
+
+								if (!verifyCard(master, requestedCard))
+									ch = 'N';
+								else {
+									ch = 'Y';
+								}
+
+							}
+						}
+
+					}
+				}
+			}
+
 		}
-		
-		CreditCardRepository creditCardRepository = creditCardRepositoryFactory.getCreditCardRepository(cardType);
-		ch = verifyHelper(requestedCard, new ArrayList<CreditCard>(creditCardRepository.findByCardNum(requestedCard.getCardNum())));
 
 		return ch;
 	}
 
 	public char afterPlaceOrder(RequestedCard requestedCard) {
 		char ch = verifyCreditCard(requestedCard);
-		String cardType = requestedCard.getCardType().toLowerCase();
-		TransactionRecord transactionRecord = null;
-		
-		transactionRecord = creditCardTransactionRecordFactory.getTransactionRecord(cardType);
-		transactionRecord = initTransactionRecord(transactionRecord, requestedCard);
 
 		if (ch == 'N') {
-			transactionRecord.setTransactionSuccess(false);
-			saveRecord(cardType, transactionRecord);
 			return 'N';
 		} else {
-			List<CreditCard> cards = null;
-			
-			CreditCardRepository creditCardRepository = creditCardRepositoryFactory.getCreditCardRepository(cardType);
-			cards = new ArrayList<CreditCard>(creditCardRepository.findByCardNum(requestedCard.getCardNum()));
 
-			CreditCard card = cards.get(0);
-			card.setAvailableCredit(card.getAvailableCredit() - requestedCard.getPurchaseAmount());
-			creditCardRepository.save(card);
+			if (CardType.detect(requestedCard.getCardNum()) == CardType.VISA) {
 
-			transactionRecord.setTransactionSuccess(true);
-			saveRecord(cardType, transactionRecord);
+				Visa visa = visaRepository.findByCardNum(requestedCard.getCardNum());
 
-			return 'Y';
-		}
-	}
+				if (visa.getAvailableCredit() < requestedCard.getPurchaseAmount()) {
+					return 'N';
+				} else {
 
-	private void saveRecord(String cardType, TransactionRecord transactionRecord) {
-		transactionRecordService.saveCreditCardRecord(cardType, transactionRecord);
-	}
+					visa.setAvailableCredit(visa.getAvailableCredit() - requestedCard.getPurchaseAmount());
 
-	private TransactionRecord initTransactionRecord(TransactionRecord transactionRecord, RequestedCard requestedCard) {
-		String cardType = requestedCard.getCardType().toLowerCase();
-		transactionRecord = setTransactionNum(transactionRecord, cardType);
-		transactionRecord.setCardHolder(requestedCard.getCardHolder());
-		transactionRecord.setCardNum(requestedCard.getCardNum());
-		transactionRecord.setDate(new Date());
-		transactionRecord.setTransactionAmount(requestedCard.getPurchaseAmount());
-		transactionRecord.setStatus(true);
-		
-		return transactionRecord;		
-	}
+					
+					// update the table
+                      visaRepository.save(visa);
+					return 'Y';
 
-	private TransactionRecord setTransactionNum(TransactionRecord transactionRecord, String cardType) {
-		int totalRecordsCount = 0;
-		
-		CreditCardTransactionRecordRepository creditCardTransactionRecordRepository = 
-				creditCardTransactionRecordRepositoryFactory.getCreditCardTransactionRecordRepository(cardType);
-		
-		totalRecordsCount = creditCardTransactionRecordRepository.findAllTransactionRecordRepository().size();
+				}
+			} else if (CardType.detect(requestedCard.getCardNum()) == CardType.MASTERCARD) {
+				Master master = masterRepository.findByCardNum(requestedCard.getCardNum());
 
-		StringBuilder sb = new StringBuilder();
-		totalRecordsCount++;
-
-		String totalRecordsCountStr = totalRecordsCount + "";
-		int bits = (totalRecordsCountStr).length();
-		int restZeroes = 10 - bits;
-
-		while (restZeroes > 0) {
-			sb.append("0");
-			restZeroes--;
-		}
-
-		sb.append(totalRecordsCountStr);
-		String transactionNum = cardType + sb.toString();
-		transactionRecord.setTransactionNum(transactionNum);
-
-		return transactionRecord;
-	}
-
-	private char verifyHelper(RequestedCard requestedCard, List<CreditCard> cards) {
-
-		String cardType = requestedCard.getCardType().toLowerCase();
-
-		if (cards.size() == 1) {
-			CreditCard card = cards.get(0);
-
-			String cardHolder = card.getCardHolder();
-			String securityCode = card.getSecurityCode();
-			boolean status = card.isStatus();
-			float availableCredit = card.getAvailableCredit();
-
-			// Check the year and month only.
-//			Date expiration = card.getExpiration();
-//			YearMonth ymExpiration = convertDateToYearMonth(expiration);
-//			YearMonth ymRequestedCardExpiration = convertDateToYearMonth(requestedCard.getExpiration());
-
-			if (!cardHolder.toLowerCase().equals(requestedCard.getCardHolder().toLowerCase())) {
-				return 'N';
-			} else if (!securityCode.equals(requestedCard.getSecurityCode())) {
-				return 'N';
-			}else if (!status) {
-				return 'N';
-			} else if (availableCredit < requestedCard.getPurchaseAmount()) {
-				return 'N';
+				master.setAvailableCredit(master.getAvailableCredit() - requestedCard.getPurchaseAmount());
+				if (master.getAvailableCredit() < requestedCard.getPurchaseAmount()) {
+					return 'N';
+				} else {
+					master.setAvailableCredit(master.getAvailableCredit() - requestedCard.getPurchaseAmount());
+                    masterRepository.save(master);
+					return 'Y';
+				}
 			}
-			
-//			 else if (ymExpiration.compareTo(ymRequestedCardExpiration) != 0) {
-//					return 'N';
-//				} 
+			else
+				return 'N';
 
-			return 'Y';
-		} else if (cards.size() == 0) {
-			return 'N';
-		} else {
-			return 'N';
 		}
 	}
 
-	private YearMonth convertDateToYearMonth(Date date) {
-		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	private static final boolean verifyCard(CreditCard creditCard, RequestedCard requestedCard) {
+		if (!creditCard.getCardHolder().toLowerCase().equals(requestedCard.getCardHolder().toLowerCase())) {
+			return false;
+		} else if (!creditCard.getSecurityCode().equals(requestedCard.getSecurityCode())) {
+			return false;
+		} else {
+			SimpleDateFormat format = new SimpleDateFormat("dd/M/yyyy");
+			format.format(creditCard.getExpiration());
+			format.format(requestedCard.getExpiration());
 
-		return YearMonth.from(localDate);
+			Calendar calenderCard = Calendar.getInstance();
+			Calendar calenderRequested = Calendar.getInstance();
+
+			calenderCard.setTime(creditCard.getExpiration());
+			calenderRequested.setTime(requestedCard.getExpiration());
+
+			if (!((calenderCard.YEAR == calenderRequested.YEAR) && (calenderCard.MONTH == calenderRequested.MONTH))) {
+				return false;
+			} else
+				return true;
+		}
+
 	}
+
 }
+
+

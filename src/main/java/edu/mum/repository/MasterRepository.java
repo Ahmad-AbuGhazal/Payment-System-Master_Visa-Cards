@@ -9,9 +9,7 @@ import edu.mum.model.Master;
 
 import java.lang.String;
 @Repository
-
-public interface MasterRepository extends JpaRepository<Master, Long>, CreditCardRepository {
-//public interface MasterRepository extends JpaRepository<Master, Long> {
-//	 @Query("Select m from Master m where m.cardNum=:cardNumber")
-//	 Master findByCardNum(@Param("cardNumber") String cardnum);
+public interface MasterRepository extends JpaRepository<Master, Long> {
+	 @Query("Select m from Master m where m.cardNum=:cardNumber")
+	 Master findByCardNum(@Param("cardNumber") String cardnum);
 }

@@ -9,10 +9,7 @@ import edu.mum.model.Visa;
 
 
 @Repository
-public interface VisaRepository extends JpaRepository<Visa, Long>, CreditCardRepository {
-
-//@Repository
-//public interface VisaRepository extends JpaRepository<Visa, Long> {
-//	@Query("Select v from Visa v where v.cardNum=:cardNumber")
-//	Visa findByCardNum(@Param("cardNumber") String cardnum);
+public interface VisaRepository extends JpaRepository<Visa, Long> {
+	@Query("Select v from Visa v where v.cardNum=:cardNumber")
+	Visa findByCardNum(@Param("cardNumber") String cardnum);
 }
