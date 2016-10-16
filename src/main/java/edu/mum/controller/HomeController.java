@@ -1,4 +1,4 @@
-package edu.mum.epayment;
+package edu.mum.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,14 +23,14 @@ public class HomeController {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/verifycard", method = RequestMethod.POST)
-	public @ResponseBody ResponseInfo verifyCard(@RequestBody RequestedCard requestedCard){
-		ResponseInfo responseInfo = new ResponseInfo();
-		char response = creditCardService.verifyCreditCard(requestedCard);
-		responseInfo.setResponse(response);
-		
-		return responseInfo;
-	}
+//	@RequestMapping(value = "/verifycard", method = RequestMethod.POST)
+//	public @ResponseBody ResponseInfo verifyCard(@RequestBody RequestedCard requestedCard){
+//		ResponseInfo responseInfo = new ResponseInfo();
+//		char response = creditCardService.verifyCreditCard(requestedCard);
+//		responseInfo.setResponse(response);
+//		
+//		return responseInfo;
+//	}
 	
 	@RequestMapping(value = "/afterplaceorder", method = RequestMethod.POST)
 	public @ResponseBody ResponseInfo afterPlaceOrder(@RequestBody RequestedCard requestedCard){

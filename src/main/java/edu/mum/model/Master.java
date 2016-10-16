@@ -33,8 +33,6 @@ public class Master implements CreditCard {
 
 	private boolean status;
 
-	// private Address address;
-
 	public String getCardHolder() {
 		return cardHolder;
 	}
@@ -90,13 +88,4 @@ public class Master implements CreditCard {
 	public void setAvailableCredit(float availableCredit) {
 		this.availableCredit = availableCredit;
 	}
-
-	
-	// public Address getAddress() {
-	// return address;
-	// }
-	//
-	// public void setAddress(Address address) {
-	// this.address = address;
-	// }
 }

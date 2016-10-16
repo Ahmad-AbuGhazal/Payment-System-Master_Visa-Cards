@@ -8,36 +8,6 @@
 	<name>epayment Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
-
-	<!-- <dependencyManagement> <dependencies> <dependency> <groupId>org.springframework</groupId> 
-		<artifactId>spring-framework-bom</artifactId> <version>4.2.4.RELEASE</version> 
-		<type>pom</type> <scope>import</scope> </dependency> <dependency> <groupId>io.spring.platform</groupId> 
-		<artifactId>platform-bom</artifactId> <version>2.0.1.RELEASE</version> <type>pom</type> 
-		<scope>import</scope> </dependency> </dependencies> </dependencyManagement> 
-		<dependencies> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-webmvc</artifactId> 
-		</dependency> <dependency> <groupId>javax.servlet</groupId> <artifactId>jstl</artifactId> 
-		</dependency> <dependency> <groupId>javax.servlet</groupId> <artifactId>javax.servlet-api</artifactId> 
-		<scope>provided</scope> </dependency> <dependency> <groupId>commons-fileupload</groupId> 
-		<artifactId>commons-fileupload</artifactId> </dependency> <dependency> <groupId>com.fasterxml.jackson.core</groupId> 
-		<artifactId>jackson-databind</artifactId> </dependency> <dependency> <groupId>org.springframework</groupId> 
-		<artifactId>spring-aop</artifactId> </dependency> <dependency> <groupId>org.aspectj</groupId> 
-		<artifactId>aspectjrt</artifactId> </dependency> <dependency> <groupId>org.aspectj</groupId> 
-		<artifactId>aspectjweaver</artifactId> </dependency> Spring Core dependencies 
-		<dependency> <groupId>org.springframework</groupId> <artifactId>spring-core</artifactId> 
-		</dependency> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-context</artifactId> 
-		</dependency> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-tx</artifactId> 
-		</dependency> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-orm</artifactId> 
-		</dependency> <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-entitymanager</artifactId> 
-		</dependency> <dependency> <groupId>cglib</groupId> <artifactId>cglib-nodep</artifactId> 
-		<version>2.2.2</version> </dependency> <dependency> <groupId>org.springframework.security</groupId> 
-		<artifactId>spring-security-core</artifactId> </dependency> <dependency> 
-		<groupId>org.springframework.security</groupId> <artifactId>spring-security-config</artifactId> 
-		</dependency> <dependency> <groupId>org.springframework.security</groupId> 
-		<artifactId>spring-security-web</artifactId> </dependency> <dependency> <groupId>org.hibernate</groupId> 
-		<artifactId>hibernate-validator</artifactId> </dependency> <dependency> <groupId>log4j</groupId> 
-		<artifactId>log4j</artifactId> </dependency> <dependency> <groupId>org.slf4j</groupId> 
-		<artifactId>slf4j-log4j12</artifactId> </dependency> </dependencies> -->
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -127,10 +97,6 @@
 
 		<!-- Database -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 		</dependency>
@@ -176,7 +142,6 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->

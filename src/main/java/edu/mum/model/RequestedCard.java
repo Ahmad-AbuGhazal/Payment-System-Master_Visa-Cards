@@ -58,8 +58,8 @@ public class RequestedCard {
 		return expiration;
 	}
 
-	public void setExpiration(Date date) {
-		this.expiration = date;
+	public void setExpiration(Date expiration) {
+		this.expiration = expiration;
 	}
 
 	public float getPurchaseAmount() {
