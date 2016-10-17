@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class RequestedCard {
 	
-	private String cardType;
+//	private String cardType;
 	
 	private String cardHolder;
 
@@ -22,13 +22,13 @@ public class RequestedCard {
 
 	private float purchaseAmount;
 
-	public String getCardType() {
-		return cardType;
-	}
-
-	public void setCardType(String cardType) {
-		this.cardType = cardType;
-	}
+//	public String getCardType() {
+//		return cardType;
+//	}
+//
+//	public void setCardType(String cardType) {
+//		this.cardType = cardType;
+//	}
 
 	public String getCardHolder() {
 		return cardHolder;

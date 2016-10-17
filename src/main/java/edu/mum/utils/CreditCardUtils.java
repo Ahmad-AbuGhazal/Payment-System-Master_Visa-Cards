@@ -13,44 +13,44 @@ import edu.mum.model.RequestedCard;
 import edu.mum.model.TransactionRecord;
 
 public class CreditCardUtils {
-	public static char verifyHelper(RequestedCard requestedCard, List<CreditCard> cards) {
-
-		String cardType = requestedCard.getCardType().toLowerCase();
-
-		if (cards.size() == 1) {
-			CreditCard card = cards.get(0);
-
-			String cardHolder = card.getCardHolder();
-			String securityCode = card.getSecurityCode();
-			boolean status = card.isStatus();
-			float availableCredit = card.getAvailableCredit();
-
-			// Check the year and month only.
-			Date expiration = card.getExpiration();
-			YearMonth ymExpiration = convertDateToYearMonth(expiration);
-			YearMonth ymRequestedCardExpiration = convertDateToYearMonth(requestedCard.getExpiration());
-
-			if (!cardHolder.toLowerCase().equals(requestedCard.getCardHolder().toLowerCase())) {
-				return 'N';
-			} else if (!securityCode.equals(requestedCard.getSecurityCode())) {
-				return 'N';
-			} else if (!status) {
-				return 'N';
-			} else if (availableCredit < requestedCard.getPurchaseAmount()) {
-				return 'N';
-			}
-			
-//			else if (ymExpiration.compareTo(ymRequestedCardExpiration) != 0) {
+//	public static char verifyHelper(RequestedCard requestedCard, List<CreditCard> cards) {
+//
+////		String cardType = requestedCard.getCardType().toLowerCase();
+//
+//		if (cards.size() == 1) {
+//			CreditCard card = cards.get(0);
+//
+//			String cardHolder = card.getCardHolder();
+//			String securityCode = card.getSecurityCode();
+//			boolean status = card.isStatus();
+//			float availableCredit = card.getAvailableCredit();
+//
+//			// Check the year and month only.
+//			Date expiration = card.getExpiration();
+//			YearMonth ymExpiration = convertDateToYearMonth(expiration);
+//			YearMonth ymRequestedCardExpiration = convertDateToYearMonth(requestedCard.getExpiration());
+//
+//			if (!cardHolder.toLowerCase().equals(requestedCard.getCardHolder().toLowerCase())) {
 //				return 'N';
-//			} 
-
-			return 'Y';
-		} else if (cards.size() == 0) {
-			return 'N';
-		} else {
-			return 'N';
-		}
-	}
+//			} else if (!securityCode.equals(requestedCard.getSecurityCode())) {
+//				return 'N';
+//			} else if (!status) {
+//				return 'N';
+//			} else if (availableCredit < requestedCard.getPurchaseAmount()) {
+//				return 'N';
+//			}
+//			
+////			else if (ymExpiration.compareTo(ymRequestedCardExpiration) != 0) {
+////				return 'N';
+////			} 
+//
+//			return 'Y';
+//		} else if (cards.size() == 0) {
+//			return 'N';
+//		} else {
+//			return 'N';
+//		}
+//	}
 	
 	public static TransactionRecord setTransactionNum(TransactionRecord transactionRecord, String cardType, int totalRecordsCount) {
 		
