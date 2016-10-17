@@ -8,8 +8,11 @@ import org.springframework.stereotype.Repository;
 import edu.mum.model.Master;
 
 import java.lang.String;
+import java.util.List;
 @Repository
 public interface MasterRepository extends JpaRepository<Master, Long> {
-	 @Query("Select m from Master m where m.cardNum=:cardNumber")
-	 Master findByCardNum(@Param("cardNumber") String cardnum);
+//	 @Query("Select m from Master m where m.cardNum=:cardNumber")
+//	 Master findByCardNum(@Param("cardNumber") String cardnum);
+	
+	List<Master> findByCardNum(String cardnum);
 }

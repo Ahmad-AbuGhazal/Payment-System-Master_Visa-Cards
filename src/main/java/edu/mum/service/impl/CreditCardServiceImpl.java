@@ -37,48 +37,39 @@ public class CreditCardServiceImpl implements CreditCardService {
 			ch = 'N';
 		else {
 			boolean isNumber = PaymentUtils.isNumeric(requestedCard.getCardNum());
-			if (isNumber == false) {
+			if (!isNumber) {
 				ch = 'N';
 			} else {
-
-				if (PaymentUtils.CheckValidNumber(requestedCard.getCardNum()) == false) {
+				if (!PaymentUtils.CheckValidNumber(requestedCard.getCardNum())) {
 					ch = 'N';
 				} else {
 					if (CardType.detect(requestedCard.getCardNum()) == CardType.VISA) {
-
-						Visa visa = visaRepository.findByCardNum(requestedCard.getCardNum());
+						Visa visa = visaRepository.findByCardNum(requestedCard.getCardNum()).get(0);
 						if (visa == null) {
 							ch = 'N';
 						} else {
-
 							if (!verifyCard(visa, requestedCard))
 								ch = 'N';
 							else {
 								ch = 'Y';
 							}
-
 						}
-
 					} else {
 						if (CardType.detect(requestedCard.getCardNum()) == CardType.MASTERCARD) {
-							Master master = masterRepository.findByCardNum(requestedCard.getCardNum());
+							Master master = masterRepository.findByCardNum(requestedCard.getCardNum()).get(0);
 							if (master == null) {
 								ch = 'N';
 							} else {
-
 								if (!verifyCard(master, requestedCard))
 									ch = 'N';
 								else {
 									ch = 'Y';
 								}
-
 							}
 						}
-
 					}
 				}
 			}
-
 		}
 
 		return ch;
@@ -90,36 +81,30 @@ public class CreditCardServiceImpl implements CreditCardService {
 		if (ch == 'N') {
 			return 'N';
 		} else {
-
 			if (CardType.detect(requestedCard.getCardNum()) == CardType.VISA) {
-
-				Visa visa = visaRepository.findByCardNum(requestedCard.getCardNum());
+				Visa visa = visaRepository.findByCardNum(requestedCard.getCardNum()).get(0);
 
 				if (visa.getAvailableCredit() < requestedCard.getPurchaseAmount()) {
 					return 'N';
 				} else {
-
 					visa.setAvailableCredit(visa.getAvailableCredit() - requestedCard.getPurchaseAmount());
 
-					
 					// update the table
-                      visaRepository.save(visa);
+					visaRepository.save(visa);
 					return 'Y';
-
 				}
 			} else if (CardType.detect(requestedCard.getCardNum()) == CardType.MASTERCARD) {
-				Master master = masterRepository.findByCardNum(requestedCard.getCardNum());
+				Master master = masterRepository.findByCardNum(requestedCard.getCardNum()).get(0);
 
 				master.setAvailableCredit(master.getAvailableCredit() - requestedCard.getPurchaseAmount());
 				if (master.getAvailableCredit() < requestedCard.getPurchaseAmount()) {
 					return 'N';
 				} else {
 					master.setAvailableCredit(master.getAvailableCredit() - requestedCard.getPurchaseAmount());
-                    masterRepository.save(master);
+					masterRepository.save(master);
 					return 'Y';
 				}
-			}
-			else
+			} else
 				return 'N';
 
 		}
@@ -150,5 +135,3 @@ public class CreditCardServiceImpl implements CreditCardService {
 	}
 
 }
-
-
